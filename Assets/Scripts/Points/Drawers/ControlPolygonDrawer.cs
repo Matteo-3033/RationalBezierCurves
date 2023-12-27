@@ -21,9 +21,16 @@ public class ControlPolygonDrawer : MonoBehaviour
     {
         PointManager.Instance.OnPointAdded += OnPointAdded;
         PointManager.Instance.OnLastPointRemoved += OnPointRemoved;
+        Settings.OnShowControlPolygonChanged += OnShowControlPolygonChanged;
+        
         foreach (var p in PointManager.Instance)
             p.OnPointChanged += OnPointChanged;
         UpdatePolygon();
+    }
+
+    private void OnShowControlPolygonChanged(object sender, Settings.OnShowControlPolygonArgs e)
+    {
+        _lineRenderer.enabled = e.Show;
     }
 
     private void OnPointAdded(object sender, PointManager.OnPointArgs e)

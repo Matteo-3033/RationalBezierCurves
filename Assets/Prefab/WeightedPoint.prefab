@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6639292688272466849}
   - component: {fileID: 4740430276332549303}
   - component: {fileID: 8408951467284435691}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: PointName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -174,7 +174,7 @@ GameObject:
   - component: {fileID: 4369161558488099625}
   - component: {fileID: 4593337058387870514}
   - component: {fileID: 9034036176760145000}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -274,7 +274,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2118338244281573637}
   - component: {fileID: 6121271476445608270}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WeightedPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -324,7 +324,7 @@ GameObject:
   - component: {fileID: 4940469193746845191}
   - component: {fileID: 5378756202976967585}
   - component: {fileID: 5405060876452377527}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Line
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -526,6 +526,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Point
       objectReference: {fileID: 0}
+    - target: {fileID: 3109064944140082562, guid: 14346fce81058ba47b5ca5b74b460d5d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -622,6 +627,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Weight
+      objectReference: {fileID: 0}
+    - target: {fileID: 3109064944140082562, guid: f356455fa8e307240bf61752704bc76f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

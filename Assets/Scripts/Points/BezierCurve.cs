@@ -13,6 +13,12 @@ public class BezierCurve
     
     private int N => Points.Count() - 1;
 
+    public Vector3 GetUPoint(float t)
+    {
+        var p = GetPoint(t);
+        return p / p.y;
+    }
+    
     public Vector3 GetPoint(float t)
     {
         if (t == 0F) return Points.First().WeightedPosition;
