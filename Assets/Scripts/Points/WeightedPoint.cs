@@ -4,7 +4,7 @@ using UnityEngine;
 public class WeightedPoint: MonoBehaviour
 {
     [SerializeField] private Transform pointObj;
-    [SerializeField] private Transform weightObj;
+    [SerializeField] private Transform weightedPointObj;
     
     public string Name { get; private set; } = "";
     
@@ -69,7 +69,7 @@ public class WeightedPoint: MonoBehaviour
         var weightChanged = weight != _weight;
         _weight = weight;
 
-        weightObj.transform.position = WeightedPosition;
+        weightedPointObj.transform.position = WeightedPosition;
    
         OnPointChanged?.Invoke(this, new OnPointChangedArgs(this, positionChanged, weightChanged));
     }

@@ -312,7 +312,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointObj: {fileID: 8758711730987552726}
-  weightObj: {fileID: 9018660893318427875}
+  weightedPointObj: {fileID: 9018660893318427875}
 --- !u!1 &5708822356912307223
 GameObject:
   m_ObjectHideFlags: 0
@@ -626,7 +626,7 @@ PrefabInstance:
     - target: {fileID: 3109064944140082562, guid: f356455fa8e307240bf61752704bc76f,
         type: 3}
       propertyPath: m_Name
-      value: Weight
+      value: WeightedPoint
       objectReference: {fileID: 0}
     - target: {fileID: 3109064944140082562, guid: f356455fa8e307240bf61752704bc76f,
         type: 3}
