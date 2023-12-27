@@ -6,35 +6,33 @@ public class DeCasteljauDrawer : MonoBehaviour
 {
     [SerializeField] private GameObject pointPrefab;
 
-    private List<GameObject> _points;
+    private List<GameObject> _objs = new();
     private float _t;
-    private bool _linesIsNext = false;
-
-    private static bool _isDrawing;
-    public static bool IsDrawing
+        
+    private void UpdateDrawing()
     {
-        get => _isDrawing;
-        private set
+        var points = InitPoints();
+
+        while (points.Count > 1)
         {
-            _isDrawing = value;
-            OnDrawingChanged?.Invoke(null, new OnDrawingChangedArgs());
+            DrawLines(points);
+            points = UpdatePoints(points);
         }
     }
 
-    public static event EventHandler<OnDrawingChangedArgs> OnDrawingChanged;
-
-    public class OnDrawingChangedArgs : EventArgs
+    public void SetT(float t)
     {
-        public bool IsDrawing = DeCasteljauDrawer.IsDrawing;
-    }
-
-    public void Init(float t)
-    {
-        if (IsDrawing) return;
-        
+        if (t is < 0 or > 1) return;
         _t = t;
-        var curve = PointManager.Instance.GetCurve();
-        _points = new List<GameObject>();
+        UpdateDrawing();
+    }
+    
+    private List<GameObject> InitPoints()
+    {
+        _objs.ForEach(Destroy);
+        _objs = new List<GameObject>();
+        
+        var points = new List<GameObject>();
         
         for (var i = 0; i < PointManager.Instance.Count - 1; i++)
         {
@@ -42,53 +40,63 @@ public class DeCasteljauDrawer : MonoBehaviour
             var p2 = PointManager.Instance[i + 1];
             var pos = Vector3.Lerp(p1.WeightedPosition, p2.WeightedPosition, _t);
             var point = Instantiate(pointPrefab, pos, Quaternion.identity, transform);
-            _points.Add(point);
+            
+            _objs.Add(point);
+            points.Add(point);
         }
-        
-        _linesIsNext = true;
-        IsDrawing = true;
-    }
-    
-    public void Next()
-    {
-        if (!IsDrawing || _points.Count <= 1) return;
-        
-        if (_linesIsNext) DrawLines();
-        else NewPoints();
-        
-        _linesIsNext = !_linesIsNext;
-        
-        if (_points.Count <= 1)
-        {
-            IsDrawing = false;
-            _points.ForEach(Destroy);
-        }
+
+        return points;
     }
 
-    private void DrawLines()
+    private void DrawLines(IReadOnlyList<GameObject> points)
     {
-        for (var i = 0; i < _points.Count - 1; i++)
+        for (var i = 0; i < points.Count - 1; i++)
         {
-            var line = _points[i].GetComponent<LineRenderer>();
+            var line = points[i].GetComponent<LineRenderer>();
             line.positionCount = 2;
-            line.SetPosition(0, _points[i].transform.position);
-            line.SetPosition(1, _points[i + 1].transform.position);
+            line.SetPosition(0, points[i].transform.position);
+            line.SetPosition(1, points[i + 1].transform.position);
         }
     }
     
-    private void NewPoints()
+    private List<GameObject> UpdatePoints(IReadOnlyList<GameObject> points)
     {
         var newPoints = new List<GameObject>();
-        for (var i = 0; i < _points.Count - 1; i++)
+        for (var i = 0; i < points.Count - 1; i++)
         {
-            var p1 = _points[i];
-            var p2 = _points[i + 1];
+            var p1 = points[i];
+            var p2 = points[i + 1];
             var newPos = Vector3.Lerp(p1.transform.position, p2.transform.position, _t);
             var newPoint = Instantiate(pointPrefab, newPos, Quaternion.identity, transform);
             newPoints.Add(newPoint);
+            _objs.Add(newPoint);
         }
 
-        _points.ForEach(Destroy);
-        _points = newPoints;
+        return newPoints;
+    }
+    
+    private void Start()
+    {
+        PointManager.Instance.OnPointAdded += OnPointAdded;
+        PointManager.Instance.OnLastPointRemoved += OnPointRemoved;
+        foreach (var p in PointManager.Instance)
+            p.OnPointChanged += OnPointChanged;
+        UpdateDrawing();
+    }
+
+    private void OnPointAdded(object sender, PointManager.OnPointArgs e)
+    {
+        e.Point.OnPointChanged += OnPointChanged;
+        UpdateDrawing();
+    }
+
+    private void OnPointRemoved(object sender, EventArgs e)
+    {
+        UpdateDrawing();
+    }
+
+    private void OnPointChanged(object sender, PointManager.OnPointArgs e)
+    {
+        UpdateDrawing();
     }
 }

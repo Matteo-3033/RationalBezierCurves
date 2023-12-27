@@ -19,16 +19,6 @@ public class PointWeight : MonoBehaviour
         inputField.onEndEdit.AddListener(OnWeightChanged);
     }
     
-    private void Start()
-    {
-        DeCasteljauDrawer.OnDrawingChanged += OnDrawingChanged;
-    }
-
-    private void OnDrawingChanged(object sender, DeCasteljauDrawer.OnDrawingChangedArgs e)
-    {
-        inputField.interactable = !e.IsDrawing;
-    }
-    
     private void OnWeightChanged(string weightStr)
     {
         if (float.TryParse(weightStr, out var weight))

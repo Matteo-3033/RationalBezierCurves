@@ -7,6 +7,8 @@ public class TSelector : MonoBehaviour
 {
     [SerializeField] private GameObject tPoint;
     [SerializeField] private GameObject tUPoint;
+    
+    [SerializeField] private DeCasteljauDrawer drawer;
     [SerializeField] private TextMeshProUGUI pointText;
     
     private Slider _slider;
@@ -23,20 +25,12 @@ public class TSelector : MonoBehaviour
 
     private void Start()
     {
-        DeCasteljauDrawer.OnDrawingChanged += OnDrawingChanged;
         PointManager.Instance.OnPointAdded += OnPointAdded;
         PointManager.Instance.OnLastPointRemoved += OnCurveChanged;
         
         foreach (var p in PointManager.Instance)
             p.OnPointChanged += OnCurveChanged;
         OnCurveChanged(null, null);
-    }
-
-    private void OnDrawingChanged(object sender, DeCasteljauDrawer.OnDrawingChangedArgs e)
-    {
-        _slider.interactable = !e.IsDrawing;
-        tPoint.SetActive(!e.IsDrawing);
-        tUPoint.SetActive(!e.IsDrawing);
     }
 
     private void OnPointAdded(object sender, PointManager.OnPointArgs e)
@@ -58,5 +52,6 @@ public class TSelector : MonoBehaviour
         tPoint.transform.position = p;
         tUPoint.transform.position = p / p.y;
         pointText.text = $"t = {_t:F2} \u2192 ({p.z:F2}, {p.x:F2}, {p.y:F2})";
+        drawer.SetT(_t);
     }
 }

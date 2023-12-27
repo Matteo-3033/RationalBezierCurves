@@ -19,7 +19,6 @@ public class WeightDragger : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (DeCasteljauDrawer.IsDrawing) return;
         _moving = true;
         _mousePos = Input.mousePosition;
     }

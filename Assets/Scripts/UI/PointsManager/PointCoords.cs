@@ -23,17 +23,6 @@ public class PointCoords : MonoBehaviour
         yInputField.onEndEdit.AddListener(OnYChanged);
     }
 
-    private void Start()
-    {
-        DeCasteljauDrawer.OnDrawingChanged += OnDrawingChanged;
-    }
-
-    private void OnDrawingChanged(object sender, DeCasteljauDrawer.OnDrawingChangedArgs e)
-    {
-        xInputField.interactable = !e.IsDrawing;
-        yInputField.interactable = !e.IsDrawing;
-    }
-
     private void OnXChanged(string xStr)
     {
         if (float.TryParse(xStr, out var x))

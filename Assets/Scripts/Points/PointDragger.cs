@@ -30,7 +30,6 @@ public class PointDragger : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (DeCasteljauDrawer.IsDrawing) return;
         _moving = true;
         _mousePos = Input.mousePosition;
     }

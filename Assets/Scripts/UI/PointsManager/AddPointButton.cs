@@ -16,7 +16,6 @@ public class AddPointButton : MonoBehaviour
     private void Start()
     {
         PointManager.Instance.OnLastPointRemoved += OnLastPointRemoved;
-        DeCasteljauDrawer.OnDrawingChanged += OnDrawingChanged;
     }
     
     private void OnLastPointRemoved(object sender, EventArgs args)
@@ -28,10 +27,5 @@ public class AddPointButton : MonoBehaviour
     {
         PointManager.Instance.NewPoint();
         _button.interactable = !PointManager.Instance.IsFull();
-    }
-    
-    private void OnDrawingChanged(object sender, DeCasteljauDrawer.OnDrawingChangedArgs e)
-    {
-        _button.interactable = !e.IsDrawing;
     }
 }

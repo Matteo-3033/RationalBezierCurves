@@ -10,19 +10,9 @@ public class NormalizeButton : MonoBehaviour
         _button = GetComponent<Button>();
         _button.onClick.AddListener(OnClick);
     }
-
-    private void Start()
-    {
-        DeCasteljauDrawer.OnDrawingChanged += OnDrawingChanged;
-    }
-
+    
     private void OnClick()
     {
         PointManager.Instance.NormalizeWeights();
-    }
-    
-    private void OnDrawingChanged(object sender, DeCasteljauDrawer.OnDrawingChangedArgs e)
-    {
-        _button.interactable = !e.IsDrawing;
     }
 }
