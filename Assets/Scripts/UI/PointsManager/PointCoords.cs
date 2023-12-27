@@ -54,7 +54,7 @@ public class PointCoords : MonoBehaviour
         yInputField.text = FormatCoord(_point.UPosition.y);
     }
 
-    private void OnPointChanged(object sender, PointManager.OnPointArgs e)
+    private void OnPointChanged(object sender, EventArgs e)
     {
         UpdateFields();
     }

@@ -1,3 +1,4 @@
+using System;
 using System.Globalization;
 using TMPro;
 using UnityEngine;
@@ -41,7 +42,7 @@ public class PointWeight : MonoBehaviour
         inputField.text = FormatCoord(_point.Weight);
     }
 
-    private void OnPointChanged(object sender, PointManager.OnPointArgs e)
+    private void OnPointChanged(object sender, EventArgs e)
     {
         UpdateFields();
     }

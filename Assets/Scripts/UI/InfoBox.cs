@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -9,7 +8,7 @@ public class InfoBox : MonoBehaviour
     [SerializeField] private Info[] keys;
     [SerializeField] private GameObject[] panels;
 
-    private Dictionary<Info, GameObject> _infos = new();
+    private readonly Dictionary<Info, GameObject> _infos = new();
     private float _lastTime = -DELAY * 2;
     private const float DELAY = 0.5F;
     private Info _current = Info.Idle;
@@ -47,6 +46,8 @@ public class InfoBox : MonoBehaviour
         PointManager.Instance.OnWeightsNormalized += OnWeightsNormalized;
         TSelector.Slider.onValueChanged.AddListener(OnSelectedTChanged);
         Settings.OnShowDeCasteljauChanged += OnShowDeCasteljauChanged;
+        foreach (var p in PointManager.Instance)
+            p.OnPointChanged += OnPointChanged;
     }
 
     private void OnWeightsNormalized(object sender, EventArgs e)
@@ -67,9 +68,18 @@ public class InfoBox : MonoBehaviour
 
     private void OnPointAdded(object sender, PointManager.OnPointArgs e)
     {
+        e.Point.OnPointChanged += OnPointChanged;
         SetVisible(Info.AddPoint);
     }
-    
+
+    private void OnPointChanged(object sender, WeightedPoint.OnPointChangedArgs e)
+    {
+        if (e.PositionChanged)
+            SetVisible(Info.MovePoint);
+        else if (e.WeightChanged)
+            SetVisible(Info.MoveWeight);
+    }
+
     private void OnLastPointRemoved(object sender, EventArgs e)
     {
         SetVisible(Info.RemovePoint);

@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using UnityEngine;
 
 public class ControlPolygonDrawer : MonoBehaviour
@@ -47,7 +46,7 @@ public class ControlPolygonDrawer : MonoBehaviour
         UpdatePolygon();
     }
 
-    private void OnPointChanged(object sender, PointManager.OnPointArgs e)
+    private void OnPointChanged(object sender, EventArgs e)
     {
         UpdatePolygon();
     }

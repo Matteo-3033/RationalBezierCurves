@@ -43,7 +43,7 @@ public class UCurveDrawer : MonoBehaviour
         UpdateCurve();
     }
 
-    private void OnPointChanged(object sender, PointManager.OnPointArgs e)
+    private void OnPointChanged(object sender, EventArgs e)
     {
         UpdateCurve();
     }

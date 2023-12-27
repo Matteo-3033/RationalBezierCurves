@@ -26,7 +26,20 @@ public class WeightedPoint: MonoBehaviour
     public Vector3 Position => pointObj.position;
     
     
-    public event EventHandler<PointManager.OnPointArgs> OnPointChanged;
+    public event EventHandler<OnPointChangedArgs> OnPointChanged;
+    public class OnPointChangedArgs : EventArgs
+    {
+        public readonly WeightedPoint Point;
+        public readonly bool PositionChanged;
+        public readonly bool WeightChanged;
+
+        public OnPointChangedArgs(WeightedPoint point, bool positionChanged, bool weightChanged)
+        {
+            Point = point;
+            PositionChanged = positionChanged;
+            WeightChanged = weightChanged;
+        }
+    }
     
     
     public void Init(string pointName, Vector2 point, float weight)
@@ -47,21 +60,17 @@ public class WeightedPoint: MonoBehaviour
         position.y = Mathf.Round(position.y * 1000) / 1000;
         
         pointObj.position = new Vector3(position.y, 1F, position.x);
-        UpdateWeight();
+        SetWeight(_weight, true);
     }
     
-    private void SetWeight(float weight)
+    private void SetWeight(float weight, bool positionChanged = false)
     {
         weight = Mathf.Round(weight * 1000) / 1000;
+        var weightChanged = weight != _weight;
         _weight = weight;
 
         weightObj.transform.position = WeightedPosition;
    
-        OnPointChanged?.Invoke(this, new PointManager.OnPointArgs(this));
-    }
-
-    private void UpdateWeight()
-    {
-        SetWeight(_weight);
+        OnPointChanged?.Invoke(this, new OnPointChangedArgs(this, positionChanged, weightChanged));
     }
 }

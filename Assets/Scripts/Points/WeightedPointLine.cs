@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class WeightedPointLine: MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class WeightedPointLine: MonoBehaviour
         OnPointChanged(this, new PointManager.OnPointArgs(point));
     }
 
-    private void OnPointChanged(object sender, PointManager.OnPointArgs e)
+    private void OnPointChanged(object sender, EventArgs e)
     {
         _lineRenderer.SetPosition(0, point.Position);
         _lineRenderer.SetPosition(1, point.WeightedPosition);

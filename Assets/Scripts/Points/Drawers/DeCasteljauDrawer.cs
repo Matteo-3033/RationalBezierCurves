@@ -111,7 +111,7 @@ public class DeCasteljauDrawer : MonoBehaviour
         UpdateDrawing();
     }
 
-    private void OnPointChanged(object sender, PointManager.OnPointArgs e)
+    private void OnPointChanged(object sender, EventArgs e)
     {
         UpdateDrawing();
     }
