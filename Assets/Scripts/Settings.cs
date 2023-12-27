@@ -22,4 +22,26 @@ public static class Settings
         _showControlPolygon = value;
         OnShowControlPolygonChanged?.Invoke(null, new OnShowControlPolygonArgs());
     }
+    
+    
+    private static bool _showProjectionMesh = true;
+    
+    public static event EventHandler<OnShowProjectionMeshArgs> OnShowProjectionMeshChanged;
+
+    public class OnShowProjectionMeshArgs : EventArgs
+    {
+        public bool Show => Settings.ShowProjectionMesh;
+    }
+    
+    public static bool ShowProjectionMesh
+    {
+        get => _showProjectionMesh;
+        set => SetShowProjectionMesh(value);
+    }
+
+    private static void SetShowProjectionMesh(bool value)
+    {
+        _showProjectionMesh = value;
+        OnShowProjectionMeshChanged?.Invoke(null, new OnShowProjectionMeshArgs());
+    }
 }

@@ -62,10 +62,17 @@ public class ProjectionDrawer : MonoBehaviour
     {
         PointManager.Instance.OnPointAdded += OnPointAdded;
         PointManager.Instance.OnLastPointRemoved += OnPointRemoved;
+        Settings.OnShowProjectionMeshChanged += OnShowProjectionMeshChanged;
+        
         foreach (var p in PointManager.Instance)
             p.OnPointChanged += OnPointChanged;
         
         InitMesh();
+    }
+
+    private void OnShowProjectionMeshChanged(object sender, Settings.OnShowProjectionMeshArgs e)
+    {
+        _meshRenderer.enabled = e.Show;
     }
 
     private void OnPointAdded(object sender, PointManager.OnPointArgs e)
