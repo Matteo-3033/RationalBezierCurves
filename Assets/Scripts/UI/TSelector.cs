@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class TSelector : MonoBehaviour
 {
     [SerializeField] private GameObject tPoint;
+    [SerializeField] private GameObject tUPoint;
     [SerializeField] private TextMeshProUGUI pointText;
     
     private Slider _slider;
@@ -35,6 +36,7 @@ public class TSelector : MonoBehaviour
     {
         _slider.interactable = !e.IsDrawing;
         tPoint.SetActive(!e.IsDrawing);
+        tUPoint.SetActive(!e.IsDrawing);
     }
 
     private void OnPointAdded(object sender, PointManager.OnPointArgs e)
@@ -52,8 +54,9 @@ public class TSelector : MonoBehaviour
     private void OnValueChanged(float value)
     {
         _t = value;
-        var point = _curve.GetPoint(_t);
-        tPoint.transform.position = point;
-        pointText.text = $"t = {_t:F2} \u2192 ({point.z:F2}, {point.x:F2}, {point.y:F2})";
+        var p = _curve.GetPoint(_t);
+        tPoint.transform.position = p;
+        tUPoint.transform.position = p / p.y;
+        pointText.text = $"t = {_t:F2} \u2192 ({p.z:F2}, {p.x:F2}, {p.y:F2})";
     }
 }
