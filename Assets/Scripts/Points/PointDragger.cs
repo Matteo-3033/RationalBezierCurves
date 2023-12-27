@@ -19,11 +19,9 @@ public class PointDragger : MonoBehaviour
         if (!_moving) return;
         var newMousePos = Input.mousePosition;
         var delta = (newMousePos - _mousePos!.Value) / 500;
-        //Debug.Log(_camera.TotalAngle);
-        //Debug.Log(delta);
         
         delta = Quaternion.Euler(0, -_camera.TotalAngle, 0) * delta;
-        //Debug.Log(delta);
+
         point.UPosition += new Vector2(delta.x, -delta.y);
         _mousePos = newMousePos;
     }

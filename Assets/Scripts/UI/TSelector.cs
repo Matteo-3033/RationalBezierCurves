@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class TSelector : MonoBehaviour
 {
     [SerializeField] private GameObject tPoint;
-    [SerializeField] private GameObject tUPoint;
+    [SerializeField] private TUPoint tUPoint;
     
     [SerializeField] private DeCasteljauDrawer drawer;
     [SerializeField] private TextMeshProUGUI pointText;
@@ -51,6 +51,7 @@ public class TSelector : MonoBehaviour
         var p = _curve.GetPoint(_t);
         tPoint.transform.position = p;
         tUPoint.transform.position = p / p.y;
+        tUPoint.Derivative = _curve.GetUDerivative(_t);
         pointText.text = $"t = {_t:F2} \u2192 ({p.z:F2}, {p.x:F2}, {p.y:F2})";
         drawer.SetT(_t);
     }
