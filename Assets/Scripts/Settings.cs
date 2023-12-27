@@ -44,4 +44,26 @@ public static class Settings
         _showProjectionMesh = value;
         OnShowProjectionMeshChanged?.Invoke(null, new OnShowProjectionMeshArgs());
     }
+    
+    
+    private static bool _showDeCasteljau = true;
+    
+    public static event EventHandler<OnShowDeCasteljauArgs> OnShowDeCasteljauChanged;
+
+    public class OnShowDeCasteljauArgs : EventArgs
+    {
+        public bool Show => Settings.ShowDeCasteljau;
+    }
+    
+    public static bool ShowDeCasteljau
+    {
+        get => _showDeCasteljau;
+        set => SetShowDeCasteljau(value);
+    }
+
+    private static void SetShowDeCasteljau(bool value)
+    {
+        _showDeCasteljau = value;
+        OnShowDeCasteljauChanged?.Invoke(null, new OnShowDeCasteljauArgs());
+    }
 }

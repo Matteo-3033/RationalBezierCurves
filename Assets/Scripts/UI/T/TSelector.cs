@@ -8,19 +8,33 @@ public class TSelector : MonoBehaviour
     [SerializeField] private GameObject tPoint;
     [SerializeField] private TUPoint tUPoint;
     
-    [SerializeField] private DeCasteljauDrawer drawer;
     [SerializeField] private TextMeshProUGUI pointText;
-    
-    private Slider _slider;
+
     private BezierCurve _curve;
     private float _t;
+
+    public static Slider Slider { get; private set; }
+
+    public static event EventHandler<OnSelectedTChangedArgs> OnSelectedTChanged;
+    
+    public class OnSelectedTChangedArgs : EventArgs
+    {
+        public readonly float T;
+        public readonly Vector3 P;
+        
+        public OnSelectedTChangedArgs(float t, Vector3 point)
+        {
+            T = t;
+            P = point;
+        }
+    }
 
     private void Awake()
     {
         _t = 0.5F;
-        _slider = GetComponent<Slider>();
-        _slider.value = _t;
-        _slider.onValueChanged.AddListener(OnValueChanged);
+        Slider = GetComponent<Slider>();
+        Slider.value = _t;
+        Slider.onValueChanged.AddListener(OnValueChanged);
     }
 
     private void Start()
@@ -49,10 +63,6 @@ public class TSelector : MonoBehaviour
     {
         _t = value;
         var p = _curve.GetPoint(_t);
-        tPoint.transform.position = p;
-        tUPoint.transform.position = p / p.y;
-        tUPoint.Derivative = _curve.GetUDerivative(_t);
-        pointText.text = $"t = {_t:F2} \u2192 ({p.z:F2}, {p.x:F2}, {p.y:F2})";
-        drawer.SetT(_t);
+        OnSelectedTChanged?.Invoke(this, new OnSelectedTChangedArgs(_t, p));
     }
 }

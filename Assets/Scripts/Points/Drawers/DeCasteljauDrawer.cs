@@ -6,11 +6,14 @@ public class DeCasteljauDrawer : MonoBehaviour
 {
     [SerializeField] private GameObject pointPrefab;
 
-    private List<GameObject> _objs = new();
-    private float _t;
+    private readonly List<GameObject> _objs = new();
+    private float _t = 0.5F;
         
     private void UpdateDrawing()
     {
+        if (!Settings.ShowDeCasteljau)
+            return;
+        
         var points = InitPoints();
 
         while (points.Count > 1)
@@ -19,18 +22,11 @@ public class DeCasteljauDrawer : MonoBehaviour
             points = UpdatePoints(points);
         }
     }
-
-    public void SetT(float t)
-    {
-        if (t is < 0 or > 1) return;
-        _t = t;
-        UpdateDrawing();
-    }
     
     private List<GameObject> InitPoints()
     {
         _objs.ForEach(Destroy);
-        _objs = new List<GameObject>();
+        _objs.Clear();
         
         var points = new List<GameObject>();
         
@@ -79,8 +75,28 @@ public class DeCasteljauDrawer : MonoBehaviour
     {
         PointManager.Instance.OnPointAdded += OnPointAdded;
         PointManager.Instance.OnLastPointRemoved += OnPointRemoved;
+        TSelector.OnSelectedTChanged += OnTChanged;
+        Settings.OnShowDeCasteljauChanged += OnShowDeCasteljauChanged;
+        
         foreach (var p in PointManager.Instance)
             p.OnPointChanged += OnPointChanged;
+        UpdateDrawing();
+    }
+
+    private void OnShowDeCasteljauChanged(object sender, Settings.OnShowDeCasteljauArgs e)
+    {
+        if (e.Show)
+            UpdateDrawing();
+        else
+        {
+            _objs.ForEach(Destroy);
+            _objs.Clear();
+        }
+    }
+
+    private void OnTChanged(object sender, TSelector.OnSelectedTChangedArgs e)
+    {
+        _t = e.T;
         UpdateDrawing();
     }
 

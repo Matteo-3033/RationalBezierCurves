@@ -1,10 +1,11 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class DeCasteljauToggle : MonoBehaviour
 {
     [SerializeField] private DeCasteljauDrawer drawer;
-
+    
     public void Awake()
     {
         var toggle = GetComponent<Toggle>();
@@ -14,6 +15,6 @@ public class DeCasteljauToggle : MonoBehaviour
 
     private void OnValueChanged(bool value)
     {
-	    drawer.gameObject.SetActive(value);
+	    Settings.ShowDeCasteljau = value;
     }
 }

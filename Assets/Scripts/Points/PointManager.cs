@@ -20,6 +20,8 @@ public class PointManager : MonoBehaviour, IEnumerable<WeightedPoint>
         public readonly WeightedPoint Point;
         public OnPointArgs(WeightedPoint point) => Point = point;
     }
+    
+    public event EventHandler<EventArgs> OnWeightsNormalized;
 
     public int Count => _points.Count;
     public bool IsFull() => _points.Count >= MAX_POINTS;
@@ -133,6 +135,8 @@ public class PointManager : MonoBehaviour, IEnumerable<WeightedPoint>
             p.Weight *= ci / firstW;
             ci *= c;
         }
+        
+        OnWeightsNormalized?.Invoke(this, EventArgs.Empty);
     }
     
     public BezierCurve GetCurve()
