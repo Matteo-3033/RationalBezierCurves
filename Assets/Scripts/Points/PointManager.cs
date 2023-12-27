@@ -37,7 +37,8 @@ public class PointManager : MonoBehaviour, IEnumerable<WeightedPoint>
         Instance = this;
     
         AddPoint(new Vector2(0.3F, 0.3F), 2F);
-        AddPoint(new Vector2(0.6F, 0.6F), 2F);
+        AddPoint(new Vector2(0.45F, 0.6F), 2F);
+        AddPoint(new Vector2(0.6F, 0.3F), 2F);
     }
 
     private void AddPoint(Vector2 position, float weight)

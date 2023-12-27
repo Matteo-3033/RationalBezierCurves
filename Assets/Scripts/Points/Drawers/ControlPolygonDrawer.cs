@@ -25,6 +25,7 @@ public class ControlPolygonDrawer : MonoBehaviour
         
         foreach (var p in PointManager.Instance)
             p.OnPointChanged += OnPointChanged;
+        _lineRenderer.positionCount = PointManager.Instance.Count;
         UpdatePolygon();
     }
 
