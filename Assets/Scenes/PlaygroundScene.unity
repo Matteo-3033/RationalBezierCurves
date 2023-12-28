@@ -3412,12 +3412,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: -8, y: -5, z: -8, w: -5}
   m_Softness: {x: 0, y: 0}
---- !u!1 &650978818 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3109064944140082562, guid: 024eb5618eac295499a669ecc4e89a17,
-    type: 3}
-  m_PrefabInstance: {fileID: 1125630780}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &657752176
 GameObject:
   m_ObjectHideFlags: 0
@@ -8597,7 +8591,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1698844057}
-  - component: {fileID: 1698844058}
   m_Layer: 5
   m_Name: OptionsMenu
   m_TagString: Untagged
@@ -8626,18 +8619,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1698844058
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1698844056}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ac777a7df84d864db13a0a495b3c645, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1707800821
 GameObject:
   m_ObjectHideFlags: 0
@@ -9050,7 +9031,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d47157915bd44a442a73f670be4757fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drawer: {fileID: 1886284250}
 --- !u!114 &1791420503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9382,9 +9362,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 105904d0255d1c1409f97d6aa0b9467d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tPoint: {fileID: 650978818}
-  tUPoint: {fileID: 1261722960}
-  pointText: {fileID: 612603920}
 --- !u!1 &1886284249
 GameObject:
   m_ObjectHideFlags: 0
