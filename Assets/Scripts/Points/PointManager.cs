@@ -82,30 +82,30 @@ public class PointManager : MonoBehaviour, IEnumerable<WeightedPoint>
 
     private void Iperbole()
     {
-        AddPoint(new Vector2(0.2F, 0.8F), 1F);
-        AddPoint(new Vector2(0.8F, 0.5F), 2F);
-        AddPoint(new Vector2(0.2F, 0.2F), 1F);
+        AddPoint(new Vector2(-0.5F, 0.5F), 1F);
+        AddPoint(new Vector2(0.5F, 0.0F), 2F);
+        AddPoint(new Vector2(-0.5F, -0.5F), 1F);
     }
 
     private void ArcoEllisse()
     {
-        AddPoint(new Vector2(0.2F, 0.8F), 1F);
-        AddPoint(new Vector2(0.8F, 0.5F), 0.5F);
-        AddPoint(new Vector2(0.2F, 0.2F), 1F);
+        AddPoint(new Vector2(0.25F, 0.5F), 1F);
+        AddPoint(new Vector2(0.75F, 0F), 0.5F);
+        AddPoint(new Vector2(0.25F, -0.5F), 1F);
     }
 
     private void ArcoEllisseInverso()
     {
-        AddPoint(new Vector2(0.2F, 0.8F), 1F);
-        AddPoint(new Vector2(0.8F, 0.5F), -0.5F);
-        AddPoint(new Vector2(0.2F, 0.2F), 1F);
+        AddPoint(new Vector2(0.25F, 0.5F), 1F);
+        AddPoint(new Vector2(0.75F, 0F), -0.5F);
+        AddPoint(new Vector2(0.25F, -0.5F), 1F);
     }
 
     private void ArcoCirconferenza()
     {
-        AddPoint(new Vector2(0.354F, 0.146F), 1F);
-        AddPoint(new Vector2(0.707F, 0.5F), 0.707F);
-        AddPoint(new Vector2(0.354F, 0.854F), 1F);
+        AddPoint(new Vector2(0F, -1F), 1F);
+        AddPoint(new Vector2(1F, -1F), 0.70711F);
+        AddPoint(new Vector2(1F, 0F), 1F);
     }
 
     private void Circonferenza()
