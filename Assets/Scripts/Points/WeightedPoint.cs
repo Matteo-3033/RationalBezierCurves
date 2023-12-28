@@ -53,11 +53,11 @@ public class WeightedPoint: MonoBehaviour
     {
         if (position.x < -1) position.x = -1F;
         else if (position.x > 1) position.x = 1F;
-        position.x = Mathf.Round(position.x * 1000) / 1000;
+        position.x = Mathf.Round(position.x * 1000000) / 1000000;
             
         if (position.y < -1) position.y = -1F;
         else if (position.y > 1) position.y = 1F;
-        position.y = Mathf.Round(position.y * 1000) / 1000;
+        position.y = Mathf.Round(position.y * 1000000) / 1000000;
         
         pointObj.position = new Vector3(position.y, 1F, position.x);
         SetWeight(_weight, true);
@@ -65,7 +65,7 @@ public class WeightedPoint: MonoBehaviour
     
     private void SetWeight(float weight, bool positionChanged = false)
     {
-        weight = Mathf.Round(weight * 1000) / 1000;
+        weight = Mathf.Round(weight * 1000000) / 1000000;
         var weightChanged = weight != _weight;
         _weight = weight;
 
