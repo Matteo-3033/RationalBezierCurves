@@ -110,9 +110,12 @@ public class PointManager : MonoBehaviour, IEnumerable<WeightedPoint>
 
     private void Circonferenza()
     {
-        AddPoint(new Vector2(0.354F, 0.146F), 1F);
-        AddPoint(new Vector2(0.707F, 0.5F), 0.707F);
-        AddPoint(new Vector2(0.354F, 0.854F), 1F);
+        AddPoint(new Vector2(0.2F, 0F), 1F);
+        AddPoint(new Vector2(0.2F, 0.8F), 0.2F);
+        AddPoint(new Vector2(-0.6F, 0.4F), 0.2F);
+        AddPoint(new Vector2(-0.6F, -0.4F), 0.2F);
+        AddPoint(new Vector2(0.2F, -0.8F), 0.2F);
+        AddPoint(new Vector2(0.2F, 0F), 1F);
     }
 
     private void AddPoint(Vector2 position, float weight)
