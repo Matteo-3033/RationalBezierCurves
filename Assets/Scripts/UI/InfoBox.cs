@@ -23,7 +23,8 @@ public class InfoBox : MonoBehaviour
         MovePoint,
         MoveWeight,
         Idle,
-        H
+        H,
+        Circle
     }
 
     private void Awake()
@@ -42,7 +43,11 @@ public class InfoBox : MonoBehaviour
     private void Start()
     {
         if (!Settings.InPlayground)
-            SetVisible(Info.H);
+        {
+            if (Settings.Preset == PointManager.Preset.Circonferenza)
+                SetVisible(Info.Circle);
+            else SetVisible(Info.H);
+        }
         else
         {
             SetVisible(Info.Idle);
