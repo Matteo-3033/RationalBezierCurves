@@ -8,6 +8,7 @@ public class PointCoords : MonoBehaviour
     [SerializeField] private TextMeshProUGUI pointName;
     [SerializeField] private TMP_InputField xInputField;
     [SerializeField] private TMP_InputField yInputField;
+    [SerializeField] private TMP_InputField wInputField;
     
     private WeightedPoint _point;
     
@@ -19,14 +20,19 @@ public class PointCoords : MonoBehaviour
 
     private void Awake()
     {
+        xInputField.onEndEdit.AddListener(OnXChanged);
+        yInputField.onEndEdit.AddListener(OnYChanged);
+        wInputField.onEndEdit.AddListener(OnWeightChanged);
+    }
+
+    private void Start()
+    {
         if (!Settings.InPlayground)
         {
             xInputField.interactable = false;
             yInputField.interactable = false;
-        } else
-        {
-            xInputField.onEndEdit.AddListener(OnXChanged);
-            yInputField.onEndEdit.AddListener(OnYChanged);
+            if (!_point.Name.Equals("B") || Settings.Preset == PointManager.Preset.Circonferenza)
+                wInputField.interactable = false;
         }
     }
 
@@ -40,6 +46,12 @@ public class PointCoords : MonoBehaviour
     {
         if (float.TryParse(yStr, out var y))
             _point.UPosition = new Vector2(_point.UPosition.x, y);
+    }
+    
+    private void OnWeightChanged(string weightStr)
+    {
+        if (float.TryParse(weightStr, out var weight))
+            _point.Weight = weight;
     }
 
     private void SetPoint(WeightedPoint p)
@@ -59,6 +71,7 @@ public class PointCoords : MonoBehaviour
     {
         xInputField.text = FormatCoord(_point.UPosition.x);
         yInputField.text = FormatCoord(_point.UPosition.y);
+        wInputField.text = FormatCoord(_point.Weight);
     }
 
     private void OnPointChanged(object sender, EventArgs e)
@@ -68,7 +81,6 @@ public class PointCoords : MonoBehaviour
 
     private static string FormatCoord(float coord)
     {
-        var str = coord.ToString(CultureInfo.CurrentCulture);
-        return str != "0" ? str[1..] : str;
+        return coord.ToString(CultureInfo.CurrentCulture);
     }
 }

@@ -51,12 +51,12 @@ public class WeightedPoint: MonoBehaviour
     
     private void SetPosition(Vector2 position)
     {
-        if (position.x < 0) position.x = 0F;
-        else if (position.x >= 1) position.x = 0.999F;
+        if (position.x < -1) position.x = -1F;
+        else if (position.x > 1) position.x = 1F;
         position.x = Mathf.Round(position.x * 1000) / 1000;
             
-        if (position.y < 0) position.y = 0F;
-        else if (position.y >= 1) position.y = 0.999F;
+        if (position.y < -1) position.y = -1F;
+        else if (position.y > 1) position.y = 1F;
         position.y = Mathf.Round(position.y * 1000) / 1000;
         
         pointObj.position = new Vector3(position.y, 1F, position.x);
