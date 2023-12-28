@@ -22,7 +22,8 @@ public class InfoBox : MonoBehaviour
         MoveT,
         MovePoint,
         MoveWeight,
-        Idle
+        Idle,
+        H
     }
 
     private void Awake()
@@ -36,18 +37,23 @@ public class InfoBox : MonoBehaviour
             else _infos.Add(k, panels[i]);
             panels[i].SetActive(false);
         }
-        SetVisible(Info.Idle);
     }
 
     private void Start()
     {
-        PointManager.Instance.OnPointAdded += OnPointAdded;
-        PointManager.Instance.OnLastPointRemoved += OnLastPointRemoved;
-        PointManager.Instance.OnWeightsNormalized += OnWeightsNormalized;
-        TSelector.Slider.onValueChanged.AddListener(OnSelectedTChanged);
-        Settings.OnShowDeCasteljauChanged += OnShowDeCasteljauChanged;
-        foreach (var p in PointManager.Instance)
-            p.OnPointChanged += OnPointChanged;
+        if (!Settings.InPlayground)
+            SetVisible(Info.H);
+        else
+        {
+            SetVisible(Info.Idle);
+            PointManager.Instance.OnPointAdded += OnPointAdded;
+            PointManager.Instance.OnLastPointRemoved += OnLastPointRemoved;
+            PointManager.Instance.OnWeightsNormalized += OnWeightsNormalized;
+            TSelector.Slider.onValueChanged.AddListener(OnSelectedTChanged);
+            Settings.OnShowDeCasteljauChanged += OnShowDeCasteljauChanged;
+            foreach (var p in PointManager.Instance)
+                p.OnPointChanged += OnPointChanged;
+        }
     }
 
     private void OnWeightsNormalized(object sender, EventArgs e)
