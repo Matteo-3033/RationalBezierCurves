@@ -7,6 +7,8 @@ public class NormalizeButton : MonoBehaviour
 
     private void Awake()
     {
+        if (!Settings.InPlayground)
+            gameObject.SetActive(false);
         _button = GetComponent<Button>();
         _button.onClick.AddListener(OnClick);
     }

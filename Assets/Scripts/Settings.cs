@@ -68,4 +68,5 @@ public static class Settings
     }
     
     public static PointManager.Preset? Preset { get; set; }
+    public static bool InPlayground => Preset == null;
 }

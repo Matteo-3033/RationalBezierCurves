@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +7,8 @@ public class RemovePointButton : MonoBehaviour
 
     private void Awake()
     {
+        if (!Settings.InPlayground)
+            gameObject.SetActive(false);
         _button = GetComponent<Button>();
         _button.onClick.AddListener(OnClick);
         _button.interactable = false;

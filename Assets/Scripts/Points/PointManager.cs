@@ -8,6 +8,7 @@ public class PointManager : MonoBehaviour, IEnumerable<WeightedPoint>
 {
     public enum Preset
     {
+        Iperbole,
         ArcoEllisse,
         ArcoEllisseInverso,
         ArcoCirconferenza,
@@ -45,10 +46,73 @@ public class PointManager : MonoBehaviour, IEnumerable<WeightedPoint>
             return;
         }
         Instance = this;
-    
-        AddPoint(new Vector2(0.2F, 0.2F), 2F);
-        AddPoint(new Vector2(0.5F, 0.8F), 2F);
-        AddPoint(new Vector2(0.8F, 0.2F), 2F);
+
+        if (Settings.Preset == null)
+        {
+            AddPoint(new Vector2(0.2F, 0.2F), 2F);
+            AddPoint(new Vector2(0.5F, 0.8F), 2F);
+            AddPoint(new Vector2(0.8F, 0.2F), 2F);
+        }
+        else LoadPreset();
+    }
+
+    private void LoadPreset()
+    {
+        switch (Settings.Preset)
+        {
+            case Preset.Iperbole:
+                Iperbole();
+                break;
+            case Preset.ArcoEllisse:
+                ArcoEllisse();
+                break;
+            case Preset.ArcoEllisseInverso:
+                ArcoEllisseInverso();
+                break;
+            case Preset.ArcoCirconferenza:
+                ArcoCirconferenza();
+                break;
+            case Preset.Circonferenza:
+                Circonferenza();
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+    }
+
+    private void Iperbole()
+    {
+        AddPoint(new Vector2(0.2F, 0.8F), 1F);
+        AddPoint(new Vector2(0.8F, 0.5F), 2F);
+        AddPoint(new Vector2(0.2F, 0.2F), 1F);
+    }
+
+    private void ArcoEllisse()
+    {
+        AddPoint(new Vector2(0.2F, 0.8F), 1F);
+        AddPoint(new Vector2(0.8F, 0.5F), 0.5F);
+        AddPoint(new Vector2(0.2F, 0.2F), 1F);
+    }
+
+    private void ArcoEllisseInverso()
+    {
+        AddPoint(new Vector2(0.2F, 0.8F), 1F);
+        AddPoint(new Vector2(0.8F, 0.5F), -0.5F);
+        AddPoint(new Vector2(0.2F, 0.2F), 1F);
+    }
+
+    private void ArcoCirconferenza()
+    {
+        AddPoint(new Vector2(0.354F, 0.146F), 1F);
+        AddPoint(new Vector2(0.707F, 0.5F), 0.707F);
+        AddPoint(new Vector2(0.354F, 0.854F), 1F);
+    }
+
+    private void Circonferenza()
+    {
+        AddPoint(new Vector2(0.354F, 0.146F), 1F);
+        AddPoint(new Vector2(0.707F, 0.5F), 0.707F);
+        AddPoint(new Vector2(0.354F, 0.854F), 1F);
     }
 
     private void AddPoint(Vector2 position, float weight)

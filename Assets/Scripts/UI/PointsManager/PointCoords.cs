@@ -19,8 +19,15 @@ public class PointCoords : MonoBehaviour
 
     private void Awake()
     {
-        xInputField.onEndEdit.AddListener(OnXChanged);
-        yInputField.onEndEdit.AddListener(OnYChanged);
+        if (!Settings.InPlayground)
+        {
+            xInputField.interactable = false;
+            yInputField.interactable = false;
+        } else
+        {
+            xInputField.onEndEdit.AddListener(OnXChanged);
+            yInputField.onEndEdit.AddListener(OnYChanged);
+        }
     }
 
     private void OnXChanged(string xStr)

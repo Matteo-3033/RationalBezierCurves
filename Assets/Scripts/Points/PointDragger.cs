@@ -28,6 +28,7 @@ public class PointDragger : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (!Settings.InPlayground) return;
         _moving = true;
         _mousePos = Input.mousePosition;
     }

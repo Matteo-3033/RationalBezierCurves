@@ -19,6 +19,8 @@ public class WeightDragger : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (!Settings.InPlayground &&
+            (!point.Name.Equals("B") || Settings.Preset == PointManager.Preset.Circonferenza)) return;
         _moving = true;
         _mousePos = Input.mousePosition;
     }

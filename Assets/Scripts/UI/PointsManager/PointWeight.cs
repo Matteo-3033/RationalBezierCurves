@@ -19,7 +19,14 @@ public class PointWeight : MonoBehaviour
     {
         inputField.onEndEdit.AddListener(OnWeightChanged);
     }
-    
+
+    private void Start()
+    {
+        if (!Settings.InPlayground &&
+            (!_point.Name.Equals("B") || Settings.Preset == PointManager.Preset.Circonferenza))
+            inputField.interactable = false;
+    }
+
     private void OnWeightChanged(string weightStr)
     {
         if (float.TryParse(weightStr, out var weight))
