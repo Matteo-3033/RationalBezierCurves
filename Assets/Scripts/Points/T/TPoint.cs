@@ -11,4 +11,9 @@ public class TPoint : MonoBehaviour
     {
         transform.position = e.P;
     }
+    
+    private void OnDestroy()
+    {
+        TSelector.OnSelectedTChanged -= OnSelectedTChanged;
+    }
 }

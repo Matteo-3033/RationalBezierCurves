@@ -19,4 +19,9 @@ public class TUPoint : MonoBehaviour
     {
         derivative.forward = new Vector3(value.y, derivative.forward.y, value.x);
     }
+    
+    private void OnDestroy()
+    {
+        TSelector.OnSelectedTChanged -= OnSelectedTChanged;
+    }
 }
