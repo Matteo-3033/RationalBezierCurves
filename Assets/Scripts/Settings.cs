@@ -66,4 +66,6 @@ public static class Settings
         _showDeCasteljau = value;
         OnShowDeCasteljauChanged?.Invoke(null, new OnShowDeCasteljauArgs());
     }
+    
+    public static PointManager.Preset? Preset { get; set; }
 }

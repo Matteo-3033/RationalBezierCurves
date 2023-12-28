@@ -6,6 +6,14 @@ using UnityEngine;
 
 public class PointManager : MonoBehaviour, IEnumerable<WeightedPoint>
 {
+    public enum Preset
+    {
+        ArcoEllisse,
+        ArcoEllisseInverso,
+        ArcoCirconferenza,
+        Circonferenza,
+    }
+    
     private const int MAX_POINTS = 10;
     private const int MIN_POINTS = 2;
     

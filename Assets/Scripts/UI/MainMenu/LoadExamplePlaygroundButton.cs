@@ -2,8 +2,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class LoadPlaygroundButton : MonoBehaviour
+public class LoadExamplePlaygroundButton : MonoBehaviour
 {
+    [SerializeField] private PointManager.Preset preset;
+    
     private void Awake()
     {
         var button = GetComponent<Button>();
@@ -12,7 +14,7 @@ public class LoadPlaygroundButton : MonoBehaviour
 
     private void OnClick()
     {
-        Settings.Preset = null;
+        Settings.Preset = preset;
         SceneManager.LoadScene("PlaygroundScene");
     }
 }
