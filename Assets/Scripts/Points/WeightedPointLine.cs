@@ -22,4 +22,9 @@ public class WeightedPointLine: MonoBehaviour
         _lineRenderer.SetPosition(0, point.Position);
         _lineRenderer.SetPosition(1, point.WeightedPosition);
     }
+
+    private void OnDestroy()
+    {
+        point.OnPointChanged -= OnPointChanged;
+    }
 }

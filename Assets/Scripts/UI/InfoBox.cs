@@ -115,4 +115,21 @@ public class InfoBox : MonoBehaviour
         foreach (var p in _infos.Values)
             p.SetActive(false);
     }
+
+    private void OnDestroy()
+    {
+        if (!Settings.InPlayground) return;
+        
+        TSelector.Slider.onValueChanged.RemoveListener(OnSelectedTChanged);
+        Settings.OnShowDeCasteljauChanged -= OnShowDeCasteljauChanged;
+        
+        if (PointManager.Instance == null)
+            return;
+        
+        PointManager.Instance.OnPointAdded -= OnPointAdded;
+        PointManager.Instance.OnLastPointRemoved -= OnLastPointRemoved;
+        PointManager.Instance.OnWeightsNormalized -= OnWeightsNormalized;
+        foreach (var p in PointManager.Instance)
+            p.OnPointChanged -= OnPointChanged;
+    }
 }

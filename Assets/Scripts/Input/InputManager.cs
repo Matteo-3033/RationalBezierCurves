@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class InputManager : MonoBehaviour
@@ -28,5 +29,10 @@ public class InputManager : MonoBehaviour
     public float GetCameraDistance()
     {
         return _playerInput.Camera.Movement.ReadValue<Vector2>().normalized.y;
+    }
+
+    private void OnDestroy()
+    {
+        _playerInput.Camera.Disable();
     }
 }

@@ -83,4 +83,10 @@ public class PointCoords : MonoBehaviour
     {
         return coord.ToString(CultureInfo.CurrentCulture);
     }
+
+    private void OnDestroy()
+    {
+        if (_point == null) return;
+        _point.OnPointChanged -= OnPointChanged;
+    }
 }

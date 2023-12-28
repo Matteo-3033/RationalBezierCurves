@@ -29,4 +29,10 @@ public class AddPointButton : MonoBehaviour
         PointManager.Instance.NewPoint();
         _button.interactable = !PointManager.Instance.IsFull();
     }
+
+    private void OnDestroy()
+    {
+        if (PointManager.Instance == null) return;
+        PointManager.Instance.OnLastPointRemoved -= OnLastPointRemoved;
+    }
 }

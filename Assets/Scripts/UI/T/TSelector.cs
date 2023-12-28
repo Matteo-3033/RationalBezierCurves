@@ -1,15 +1,9 @@
 using System;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class TSelector : MonoBehaviour
 {
-    [SerializeField] private GameObject tPoint;
-    [SerializeField] private TUPoint tUPoint;
-    
-    [SerializeField] private TextMeshProUGUI pointText;
-
     private BezierCurve _curve;
     private float _t;
 
@@ -64,5 +58,16 @@ public class TSelector : MonoBehaviour
         _t = value;
         var p = _curve.GetPoint(_t);
         OnSelectedTChanged?.Invoke(this, new OnSelectedTChangedArgs(_t, p));
+    }
+
+    private void OnDestroy()
+    {
+        if (PointManager.Instance == null) return;
+        
+        PointManager.Instance.OnPointAdded -= OnPointAdded;
+        PointManager.Instance.OnLastPointRemoved -= OnCurveChanged;
+        
+        foreach (var p in PointManager.Instance)
+            p.OnPointChanged -= OnCurveChanged;
     }
 }

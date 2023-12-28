@@ -41,7 +41,6 @@ public class WeightedPoint: MonoBehaviour
         }
     }
     
-    
     public void Init(string pointName, Vector2 point, float weight)
     {
         _weight = weight;

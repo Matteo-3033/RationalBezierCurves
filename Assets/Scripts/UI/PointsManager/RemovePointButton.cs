@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,5 +29,11 @@ public class RemovePointButton : MonoBehaviour
     {
         PointManager.Instance.RemovePoint();
         _button.interactable = !PointManager.Instance.IsMinimum();
+    }
+
+    private void OnDestroy()
+    {
+        if (PointManager.Instance == null) return;
+        PointManager.Instance.OnPointAdded -= OnPointAdded;
     }
 }

@@ -29,4 +29,11 @@ public class CurveDegree : MonoBehaviour
     {
         _text.text = _baseText + $"{PointManager.Instance.Count - 1}";
     }
+
+    private void OnDestroy()
+    {
+        if (PointManager.Instance == null) return;
+        PointManager.Instance.OnPointAdded -= OnCurveChanged;
+        PointManager.Instance.OnLastPointRemoved -= OnCurveChanged;
+    }
 }

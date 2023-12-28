@@ -90,4 +90,18 @@ public class ProjectionDrawer : MonoBehaviour
     {
         InitMeshVertices();
     }
+
+    private void OnDestroy()
+    {
+        Settings.OnShowProjectionMeshChanged -= OnShowProjectionMeshChanged;
+        
+        if (PointManager.Instance == null)
+            return;
+        
+        PointManager.Instance.OnPointAdded -= OnPointAdded;
+        PointManager.Instance.OnLastPointRemoved -= OnPointRemoved;
+        
+        foreach (var p in PointManager.Instance)
+            p.OnPointChanged -= OnPointChanged;
+    }
 }

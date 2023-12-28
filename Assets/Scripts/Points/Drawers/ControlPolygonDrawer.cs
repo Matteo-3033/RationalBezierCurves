@@ -50,4 +50,18 @@ public class ControlPolygonDrawer : MonoBehaviour
     {
         UpdatePolygon();
     }
+
+    private void OnDestroy()
+    {
+        Settings.OnShowControlPolygonChanged -= OnShowControlPolygonChanged;
+        
+        if (PointManager.Instance == null)
+            return;
+        
+        PointManager.Instance.OnPointAdded -= OnPointAdded;
+        PointManager.Instance.OnLastPointRemoved -= OnPointRemoved;
+        
+        foreach (var p in PointManager.Instance)
+            p.OnPointChanged -= OnPointChanged;
+    }
 }
