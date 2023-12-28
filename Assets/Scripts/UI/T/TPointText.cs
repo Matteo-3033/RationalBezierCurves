@@ -18,6 +18,7 @@ public class TPointText : MonoBehaviour
 
     private void OnSelectedTChanged(object sender, TSelector.OnSelectedTChangedArgs e)
     {
-        _text.text = $"t = {e.T:F2} \u2192 ({e.P.z:F2}, {e.P.x:F2})";
+        var p = e.P / e.P.y;
+        _text.text = $"t = {e.T:F2} \u2192 ({p.z:F2}, {p.x:F2})";
     }
 }
