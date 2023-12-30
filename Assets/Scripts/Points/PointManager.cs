@@ -178,6 +178,10 @@ public class PointManager : MonoBehaviour, IEnumerable<WeightedPoint>
         
         var point = _points.Last();
         _points.RemoveAt(Count - 1);
+
+        _points.First().UPosition = bLefts.First();
+        _points.Last().UPosition = bRights.Last();
+        
         OnLastPointRemoved?.Invoke(this, EventArgs.Empty);
         Destroy(point.gameObject);
     }
@@ -202,7 +206,8 @@ public class PointManager : MonoBehaviour, IEnumerable<WeightedPoint>
 
     public void NormalizeWeights()
     {
-        var c = (float) Math.Pow(_points.First().Weight / _points.Last().Weight, 1F / Count);
+        var n = Count - 1;
+        var c = (float) Math.Pow(_points.First().Weight / _points.Last().Weight, 1F / n);
         var ci = 1F;
         var firstW = _points.First().Weight;
         foreach (var p in _points)

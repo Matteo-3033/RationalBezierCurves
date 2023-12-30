@@ -28,7 +28,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1276091665343662942}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.048}
+  m_LocalPosition: {x: 0, y: 0, z: 0.106}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -36,7 +36,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.031, y: 0}
+  m_AnchoredPosition: {x: -0.014, y: 0.0764}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3523768514609324594
@@ -76,8 +76,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294901760
-  m_fontColor: {r: 0, g: 0, b: 1, a: 1}
+    rgba: 4278190335
+  m_fontColor: {r: 1, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -189,16 +189,16 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1415352276662985149}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 20, y: 20, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8480242038017277621}
-  m_Father: {fileID: 9018660893318427875}
+  m_Father: {fileID: 8758711730987552726}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.1, y: 1.65}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &4369161558488099625
@@ -324,7 +324,7 @@ GameObject:
   - component: {fileID: 4940469193746845191}
   - component: {fileID: 5378756202976967585}
   - component: {fileID: 5405060876452377527}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Line
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -533,7 +533,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 3074973053257418265, guid: 14346fce81058ba47b5ca5b74b460d5d,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4828970417753166066}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3109064944140082562, guid: 14346fce81058ba47b5ca5b74b460d5d,
         type: 3}
@@ -631,15 +635,11 @@ PrefabInstance:
     - target: {fileID: 3109064944140082562, guid: f356455fa8e307240bf61752704bc76f,
         type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 3074973053257418265, guid: f356455fa8e307240bf61752704bc76f,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4828970417753166066}
+    m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3109064944140082562, guid: f356455fa8e307240bf61752704bc76f,
         type: 3}

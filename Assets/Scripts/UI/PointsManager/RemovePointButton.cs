@@ -12,12 +12,12 @@ public class RemovePointButton : MonoBehaviour
             gameObject.SetActive(false);
         _button = GetComponent<Button>();
         _button.onClick.AddListener(OnClick);
-        _button.interactable = false;
     }
     
     private void Start()
     {
         PointManager.Instance.OnPointAdded += OnPointAdded;
+        _button.interactable = !PointManager.Instance.IsMinimum();
     }
     
     private void OnPointAdded(object sender, PointManager.OnPointArgs args)
