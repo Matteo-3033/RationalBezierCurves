@@ -50,8 +50,8 @@ public class PointManager : MonoBehaviour, IEnumerable<WeightedPoint>
         if (Settings.Preset == null)
         {
             AddPoint(new Vector2(-0.6F, -0.6F), 2F);
-            AddPoint(new Vector2(0F, 0.6F), 1.5F);
-            AddPoint(new Vector2(0.6F, -0.6F), 2F);
+            AddPoint(new Vector2(0.6F, 0F), 1.5F);
+            AddPoint(new Vector2(-0.6F, 0.6F), 2F);
         }
         else LoadPreset();
     }
@@ -82,40 +82,40 @@ public class PointManager : MonoBehaviour, IEnumerable<WeightedPoint>
 
     private void Iperbole()
     {
-        AddPoint(new Vector2(-0.5F, 0.5F), 1F);
-        AddPoint(new Vector2(0.5F, 0.0F), 2F);
+        AddPoint(new Vector2(0.5F, -0.5F), 1F);
+        AddPoint(new Vector2(0.0F, 0.5F), 2F);
         AddPoint(new Vector2(-0.5F, -0.5F), 1F);
     }
 
     private void ArcoEllisse()
     {
-        AddPoint(new Vector2(0.25F, 0.5F), 1F);
-        AddPoint(new Vector2(0.75F, 0F), 0.5F);
-        AddPoint(new Vector2(0.25F, -0.5F), 1F);
+        AddPoint(new Vector2(0.5F, 0.25F), 1F);
+        AddPoint(new Vector2(0F, 0.75F), 0.5F);
+        AddPoint(new Vector2(-0.5F, 0.25F), 1F);
     }
 
     private void ArcoEllisseInverso()
     {
-        AddPoint(new Vector2(0.25F, 0.5F), 1F);
-        AddPoint(new Vector2(0.75F, 0F), -0.5F);
-        AddPoint(new Vector2(0.25F, -0.5F), 1F);
+        AddPoint(new Vector2(0.5F, 0.25F), 1F);
+        AddPoint(new Vector2(0F, 0.75F), -0.5F);
+        AddPoint(new Vector2(-0.5F, 0.25F), 1F);
     }
 
     private void ArcoCirconferenza()
     {
-        AddPoint(new Vector2(0F, -1F), 1F);
-        AddPoint(new Vector2(1F, -1F), 0.70711F);
-        AddPoint(new Vector2(1F, 0F), 1F);
+        AddPoint(new Vector2(-1F, 0F), 1F);
+        AddPoint(new Vector2(-1F, 1F), 0.70711F);
+        AddPoint(new Vector2(0F, 1F), 1F);
     }
 
     private void Circonferenza()
     {
-        AddPoint(new Vector2(0.2F, 0F), 1F);
-        AddPoint(new Vector2(0.2F, 0.8F), 0.2F);
-        AddPoint(new Vector2(-0.6F, 0.4F), 0.2F);
-        AddPoint(new Vector2(-0.6F, -0.4F), 0.2F);
-        AddPoint(new Vector2(0.2F, -0.8F), 0.2F);
-        AddPoint(new Vector2(0.2F, 0F), 1F);
+        AddPoint(new Vector2(0F, 0.2F), 1F);
+        AddPoint(new Vector2(0.8F, 0.2F), 0.2F);
+        AddPoint(new Vector2(0.4F, -0.6F), 0.2F);
+        AddPoint(new Vector2(-0.4F, -0.6F), 0.2F);
+        AddPoint(new Vector2(-0.8F, 0.2F), 0.2F);
+        AddPoint(new Vector2(0F, 0.2F), 1F);
     }
 
     private void AddPoint(Vector2 position, float weight)

@@ -22,7 +22,7 @@ public class PointDragger : MonoBehaviour
         
         delta = Quaternion.Euler(0, -_camera.TotalAngle, 0) * delta;
 
-        point.UPosition += new Vector2(delta.x, -delta.y);
+        point.UPosition += new Vector2(-delta.y, delta.x);
         _mousePos = newMousePos;
     }
 

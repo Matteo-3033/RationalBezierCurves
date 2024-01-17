@@ -20,7 +20,7 @@ public class WeightedPoint: MonoBehaviour
     
     public Vector2 UPosition
     {
-        get => new(pointObj.position.z, pointObj.position.x);
+        get => new(pointObj.position.x, pointObj.position.z);
         set => SetPosition(value);
     }
     public Vector3 Position => pointObj.position;
@@ -58,7 +58,7 @@ public class WeightedPoint: MonoBehaviour
         else if (position.y > 1) position.y = 1F;
         position.y = Mathf.Round(position.y * 1000000) / 1000000;
         
-        pointObj.position = new Vector3(position.y, 1F, position.x);
+        pointObj.position = new Vector3(position.x, 1F, position.y);
         SetWeight(_weight, true);
     }
     
