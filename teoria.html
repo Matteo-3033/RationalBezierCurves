@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="it">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+        <title>Curve razionali di Bézier</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
+            integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq"
+            crossorigin="anonymous"
+        />
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"
+            integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"
+            integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI"
+            crossorigin="anonymous"
+            onload="renderMathInElement(document.body);"
+        ></script>
+        <style type="text/css">
+            body {
+                margin: 0;
+                font-family: "Verdana", sans-serif;
+                background: #fffaf0 !important;
+            }
+
+            .overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.7);
+                justify-content: center;
+                align-items: center;
+                z-index: 2;
+            }
+
+            .enlarged-image {
+                max-width: 90%;
+                max-height: 90%;
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="index.html"
+                    >Curve razionali di Bézier</a
+                >
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav"
+                    aria-controls="navbarNav"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div
+                    class="collapse navbar-collapse justify-content-end"
+                    id="navbarNav"
+                >
+                    <div class="navbar-nav">
+                        <a class="nav-item nav-link" href="manuale.html"
+                            >Manuale Utente</a
+                        >
+                        <a class="nav-item nav-link active" href="teoria.html"
+                            >Teoria</a
+                        >
+                        <a class="nav-item nav-link" href="app.html"
+                            >Applicazione</a
+                        >
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container mt-4">
+            <h1>Teoria</h1>
+
+            <p>
+                Le curve razionali di Bézier sono una generalizzazione delle
+                curve di Bézier che permettono di ottenere un maggior controllo
+                sulla geometria della curva tramite l&#39;introduzione di un
+                peso associato a ogni punto di controllo.
+            </p>
+            <p>
+                Limitandosi al caso in tre dimensioni, poiché l&#39;estensione a
+                più dimensioni è immediata, detto \(XYU\) lo spazio di
+                riferimento - con l&#39;asse \(U\) che punta verso l&#39;alto,
+                \(X\) verso l&#39;osservatore e \(Y\) verso destra - ogni punto
+                di controllo \(P_i\), con \(0 \le i \le n\), è definito sul
+                piano \(U = 1\) come \((P_{ix}, P_{iy}, 1)\). Associando quindi
+                a ogni punto \(P_i\) un peso \(w_i\) è possibile individuare n
+                nuovi punti con coordinate \(\tilde{P_i} = w_i P_i = (w_i
+                P_{ix}, w_i P_{iy}, w_i)\). Tali punti definiscono il poligono
+                di controllo della curva di Bézier:
+            </p>
+            <p>
+                \[ \tilde{B}(t) = \sum_{i = 0}^{n}{B_i^n(t) \tilde{P_i}} =
+                \sum_{i = 0}^{n}{B_i^n(t) w_i P_i} \]
+            </p>
+            <p>
+                Dove \(B_i^n\) è il polinomio di Bernstein \(\left(n \atop i
+                \right) t^i (1 - t)^{n - i}\).
+            </p>
+            <p>
+                La curva razionale di Bézier \(B\) definita dai punti di
+                controllo \(P_i\) pesati per \(w_i\) è quindi ottenuta a partire
+                da \(\tilde{B}\) dividendo le coordinate dei suoi punti per la
+                coordinata \(U\). Di conseguenza:
+            </p>
+            <p>
+                \[ B(t) = \frac{\tilde{B}(t)}{\sum_{i = 0}^{n}{B_i^n(t) w_i}} =
+                \frac{\sum_{i = 0}^{n}{B_i^n(t) w_i P_i}}{\sum_{i =
+                0}^{n}{B_i^n(t) w_i}} \]
+            </p>
+            <p>
+                \(B\) è quindi una curva piana, i cui punti stanno tutti sul
+                piano \(U = 1\). \(\newline\) Se \(n + 1\) è il numero di punti
+                di controllo della curva \(n\) è allora il grado della curva.
+            </p>
+
+            <figure class="text-center">
+                <div class="overlay" id="curve-imageOverlay">
+                    <img src="./res/teoria/curve.png" class="enlarged-image" />
+                </div>
+                <img
+                    src="./res/teoria/curve.png"
+                    class="rounded img-fluid mx-auto d-block"
+                    style="max-width: 50%; height: auto"
+                    onclick="openModal('curve')"
+                />
+                <figcaption class="mt-2">
+                    Figura 1: Curva razionale di Bézier di grado \(7\)<br />
+                    <span style="font-style: italic">
+                        Cliccare sull'immagine per ingrandirla</span
+                    >
+                </figcaption>
+            </figure>
+
+            <p>
+                I punti di controllo \(P_i\) definiscono il poligono di
+                controllo della curva, dentro il cui involucro convesso essa sta
+                se tutti i pesi sono positivi; tale proprietà è detta proprietà
+                dell'involucro convesso. Altrimenti, se almeno un peso è
+                negativo, la curva tende ad allontanarsi dal rispettivo punto di
+                controllo, tanto più quanto è grande il peso in valore assoluto.
+                In questo caso è possibile che il denominatore \(\sum_{i =
+                0}^{n}{B_i^n(t) w_i}\) assuma un valore nullo e per questo si
+                preferisce utilizzare solitamente pesi positivi.
+            </p>
+            <p>
+                Se tutti i pesi \(w_i\) assumono valore \(1\), \(B(t) =
+                \tilde{B}(t)\), poiché \(\sum_{i}^{n}{B_i^n(t)} = 1\), e la
+                curva razionale coincide con quella ottenuta dai punti di
+                controllo \(\tilde{P_i}\).
+            </p>
+            <h2 id="algoritmo-di-de-casteljau">Algoritmo di De Casteljau:</h2>
+            <p>
+                L&#39;algoritmo di De Casteljau permette di ottenere in modo
+                ricorsivo i punti di una curva di Bézier a partire dai sui punti
+                di controllo applicando la formula:
+            </p>
+            <p>
+                \[ \begin{cases} b_i^r(t) = P_i\ se\ r = 0 \\ b_i^r(t) = (1 - t)
+                b_i^{r - 1} + t b_{i + 1}^{r - 1}(t)\ altrimenti \end{cases} \]
+            </p>
+            <p>
+                Con \(1 \le r \le n \wedge 0 \le i \le n - r\). Di conseguenza
+                \(b_0^n(t) = B(t)\).
+            </p>
+            <p>
+                Tale algoritmo può essere esteso al caso delle curve razionali
+                considerando nell&#39;equazione ricorsiva anche i pesi:
+            </p>
+            <p>
+                \[ \begin{cases} b_i^r(t) = P_i\ se\ r = 0 \\ b_i^r(t) =
+                \frac{(1 - t) w_i^{r - 1} b_i^{r - 1} + t w_{i + 1}^{r - 1} b_{i
+                + 1}^{r - 1}(t)}{w_i^r(t)}\ altrimenti \end{cases} \]
+            </p>
+            <p>Con:</p>
+            <p>
+                \[ \begin{cases} w_i^r(t) = w_i\ se\ r = 0 \\ w_i^r(t) = (1 - t)
+                w_i^{r - 1}(t) + t w_{i + 1}^{r - 1}(t)\ altrimenti \end{cases}
+                \]
+            </p>
+            <p>
+                In questa versione dell&#39;algoritmo anche i pesi sono
+                calcolati ricorsivamente, considerando come peso \(i\)-esimo al
+                primo passo solamente il peso originale \(w_i\) e al passo
+                \(r\)-esimo l&#39;interpolazione per \(t\) del peso \(i\)-esimo
+                col peso \(i+1\)-esimo calcolato al passo \((r - 1)\)-esimo.
+            </p>
+
+            <figure class="text-center">
+                <div class="overlay" id="deCasteljau-imageOverlay">
+                    <img
+                        src="./res/teoria/deCasteljau.png"
+                        class="enlarged-image"
+                    />
+                </div>
+                <img
+                    src="./res/teoria/deCasteljau.png"
+                    class="rounded img-fluid mx-auto d-block"
+                    style="max-width: 50%; height: auto"
+                    onclick="openModal('deCasteljau')"
+                />
+                <figcaption class="mt-2">
+                    Figura 2: Applicazione dell'algoritmo di De Casteljau su una
+                    curva di Bézier razionale di grado \(3\)<br />
+                    Le etichette \(\underline{b}_i^j\) rappresentano i punti
+                    ottenuti applicando il \(j\)-esimo passo
+                    dell&#39;algoritmo<br />
+                    <span style="font-style: italic">
+                        Cliccare sull'immagine per ingrandirla</span
+                    >
+                </figcaption>
+            </figure>
+
+            <h2 id="elevamento-di-grado">Elevamento di grado:</h2>
+            <p>
+                L&#39;operazione di elevamento di grado permette di ottenere a
+                partire da una curva di Bézier di grado \(n\) una nuova curva di
+                grado \(n + 1\) con la stessa geometria. Ciò può essere utile
+                perché una curva di grado \(n + 1\) risulta più flessibile e
+                adattabile a diverse situazioni rispetto a una di grado \(n\):
+                ad esempio una curva di grado \(1\) è in grado di rappresentare
+                solamente segmenti, al contrario di una di grado \(2\), che
+                invece può rappresentare archi di parabola, di iperbole e di
+                ellisse.
+            </p>
+            <p>
+                Nel caso non razionale ogni nuovo punto di controllo
+                \(P_i&#39;\) della curva di grado \(n + 1\) è calcolato come:
+            </p>
+            <p>
+                \[ \begin{cases} P_i&#39; = P_i = P_0\ se\ i = 0 \\ P_i&#39; =
+                P_{i - 1} = P_n\ se\ i = n + 1 \\ P_i&#39; = \frac{i}{n + 1}
+                P_{i - 1} + \left(1 - \frac{i}{n + 1} \right) P_i\ altrimenti
+                \end{cases} \]
+            </p>
+            <p>Con \(0 \le i \le n + 1\).</p>
+            <p>
+                Tali equazioni possono essere calcolate moltiplicando \(\sum_{i
+                = 0}^{n}{B_i^n(t) P_i}\) per \(1 = t + (1 - t)\):
+            </p>
+            <p>
+                \[ t \sum_{i = 0}^{n}{B_i^n(t) P_i} + (1 - t) \sum_{i =
+                0}^{n}{B_i^n(t) P_i} \\ \sum_{i = 0}^{n}{\left(n \atop i \right)
+                t^{i + 1} (1 - t)^{(n + 1) - (i + 1)} P_i} + \sum_{i =
+                0}^{n}{\left(n \atop i \right) t^i (1 - t)^{n - i + 1} P_i} \\
+                \sum_{i = 0}^{n}{\frac{i + 1}{n + 1} B_{i + 1}^{n + 1} P_i} +
+                \sum_{i = 0}^{n}{\frac{n + 1 - i}{n + 1} B_{i}^{n + 1} P_i} \\
+                \sum_{i = 0}^{n + 1}{\frac{i}{n + 1} B_{i}^{n + 1} P_{i - 1}} +
+                \sum_{i = 0}^{n + 1}{\frac{n + 1 - i}{n + 1} B_{i}^{n + 1} P_i}
+                \\ \sum_{i = 0}^{n + 1}{\left(\frac{i}{n + 1} P_{i - 1} +
+                \left(1 - \frac{i}{n + 1} \right) P_i\right) B_{i}^{n + 1}} \]
+            </p>
+            <p>
+                Estendendo l&#39;operazione al caso razionale essa deve essere
+                applicata anche ai pesi, ottenendo le equazioni:
+            </p>
+            <p>
+                \[ \begin{cases} P_i&#39; = P_i = P_0\ se\ i = 0 \\ P_i&#39; =
+                P_{i - 1} = P_n\ se\ i = n + 1 \\ P_i&#39; = \frac{i w_{i - 1}
+                P_{i - 1} + (n + 1 - i) w_i P_i}{i w_{i - 1} + (n + 1 - i) w_i}
+                \ altrimenti \end{cases} \]
+            </p>
+            <p>Con:</p>
+            <p>
+                \[ \begin{cases} w_i&#39; = w_i (n - 1) = w_0 (n - 1)\ se\ i = 0
+                \\ w_i&#39; = w_i (n - 1) = w_n (n - 1)\ se\ i = n + 1 \\
+                w_i&#39; = i w_{i - 1} + (n + 1 - i) w_i \ altrimenti
+                \end{cases} \]
+            </p>
+            <p>
+                Tale operazione può essere ripetuta un qualsiasi numero di volte
+                e, se tutti i pesi hanno lo stesso segno, il poligono di
+                controllo tenderà a convergere con la curva.
+            </p>
+
+            <figure class="text-center">
+                <div class="overlay" id="degreeElevation-imageOverlay">
+                    <img
+                        src="./res/teoria/degreeElevation.png"
+                        class="enlarged-image"
+                    />
+                </div>
+                <img
+                    src="./res/teoria/degreeElevation.png"
+                    class="rounded img-fluid mx-auto d-block"
+                    style="max-width: 50%; height: auto"
+                    onclick="openModal('degreeElevation')"
+                />
+                <figcaption class="mt-2">
+                    Figura 3: Elevamento di grado di una curva di Bézier
+                    razionale di grado \(2\)<br />
+                    I punti \(\underline{b}_i\) sono i punti di controllo della
+                    curva di grado \(2\); i punti \(\underline{b}_i^*\) quelli
+                    della curva elevata di grado <br />
+                    <span style="font-style: italic">
+                        Cliccare sull'immagine per ingrandirla</span
+                    >
+                </figcaption>
+            </figure>
+
+            <h2 id="riduzione-di-grado">Riduzione di grado:</h2>
+            <p>
+                L&#39;operazione di riduzione di grado è l&#39;inversa
+                dell&#39;elevamento di grado e permette quindi di ottenere a
+                partire da una curva di grado \(n\) una curva di grado \(n - 1\)
+                con la stessa geometria. Tuttavia, essa non sempre può essere
+                applicata, perché una curva di grado \(n - 1\) non è in grado di
+                rappresentare la stessa varietà di curve rappresentabili con \(n
+                + 1\) punti di controllo e pesi. Data una curva di grado \(n\) è
+                però sempre possibile ottenere una curva di grado \(n - 1\) che
+                approssimi la sua geometria.
+            </p>
+            <p>
+                Per farlo si ipotizza che ognuno dei punti di controllo della
+                curva originale, di grado \(n\), sia stato ottenuto tramite un
+                elevamento di grado della curva che si vuole calcolare.
+                Indicando con \(P\) i punti di controllo della curva di grado
+                \(n\) e con \(P&#39;\) quelli della curva di grado \(n - 1\)
+                varrebbe quindi che:
+            </p>
+            <p>
+                <!-- prettier-ignore -->
+                \[ \begin{cases}
+                    P_i = P_i&#39; = P_0\ se\ i = 0 \\
+                    P_i = P_{i - 1}&#39; = P_{n - 1}\ se\ i = n \\
+                    P_i = \frac{i}{n} P_{i - 1}&#39; + \frac{n - i}{n} P_i&#39;\ altrimenti
+                \end{cases} \]
+            </p>
+            <p>
+                Da tali equazioni è quindi possibile ricavare due formule
+                ricorsive per il calcolo di \(P_{i - 1}&#39;\) e \(P_i&#39;\):
+            </p>
+            <p>
+                \[ P_i^{left} = \frac{n P_i - i P_{i - 1}^{left}}{n - i}\ con\ 0
+                \le i \le n - 1 \\ P_{i - 1}^{right} = \frac{n P_i - (n - i)
+                P_i^{right}}{i}\ con\ 1 \le i \le n \]
+            </p>
+            <p>
+                \(P_i^{left}\) è calcolata tramite una ricorsione a salire,
+                partendo da \(i = 0\), per il quale coincide con \(P_0\), mentre
+                \(P_i^{right}\) tramite una ricorsione a scendere, partendo da
+                \(i = n\), per cui coincide con \(P_n\).
+            </p>
+            <p>
+                \(P_i^{left}\) inoltre rappresenta una buona approssimazione per
+                \(P_0&#39;\), mentre \(P_{i-1}^{right}\) per \(P_n&#39;\); di
+                conseguenza è possibile calcolare il nuovo insieme di punti di
+                controllo come:
+            </p>
+            <p>
+                \[ P_i&#39; = (1 - \alpha_i) P_i^{left} + \alpha_i P_i^{right}
+                \]
+            </p>
+            <p>
+                Il valore da assegnare al parametro \(\alpha\) può variare, ma
+                alcune scelte comuni sono:
+            </p>
+            <ul>
+                <li>
+                    \(\alpha_i = 0\) se \(i &lt; \frac{n}{2}\), \(\alpha_i = 1\)
+                    se \(i &gt; \frac{n}{2}\), scegliendo a seconda della
+                    situazione il valore per \(i = \frac{n}{2}\);
+                </li>
+                <li>\(\alpha_i = \frac{i}{n - 1}\);</li>
+                <li>
+                    \(\alpha_i = 2^{1 - 2n} \sum_{j = 0}^{i}{\left(2n \atop 2j
+                    \right)}\).
+                </li>
+            </ul>
+            <p>Nel progetto è stata adottata quest&#39;ultima soluzione.</p>
+            <h2 id="riparametrizzazione-e-forma-standard-">
+                Riparametrizzazione e forma standard:
+            </h2>
+            <p>
+                In una curva razionale di Bézier il peso di un punto di
+                controllo determina quanto la curva è attratta da tale punto
+                rispetto agli altri. Di conseguenza il valore assunto dai
+                singoli pesi non influenza la geometria della curva quanto
+                piuttosto i rapporti tra essi.
+            </p>
+            <p>
+                Ogni curva razionale di Bézier può essere infatti riscritta
+                come:
+            </p>
+            <p>
+                \[ B(t) = \frac{\sum_{i = 0}^{n}{B_i^n(t) w_i P_i}}{\sum_{i =
+                0}^{n}{B_i^n(t) w_i}} = \frac{\sum_{i = 0}^{n}{B_i^n(t) c w_i
+                P_i}}{\sum_{i = 0}^{n}{B_i^n(t) c w_i}} \]
+            </p>
+            <p>
+                Con \(c\) una costante non nulla che moltiplica ogni peso
+                \(w_i\).
+            </p>
+            <p>
+                Un&#39;altra trasformazione che lascia la geometria della curva
+                invariata può essere ottenuta per
+            </p>
+            <p>
+                \[ t = \frac{c \hat{t}}{(1 - \hat{t}) + c \hat{t}} \Rightarrow
+                (1 - t) = \frac{1 - \hat{t}}{(1 - \hat{t}) + c \hat{t}} \]
+            </p>
+            <p>
+                I polinomi di Bernstein risultano in questo modo riscritti come:
+            </p>
+            <p>
+                \[ B_i^n(t) = \left(n \atop i \right) \left(\frac{c \hat{t}}{(1
+                - \hat{t}) + c \hat{t}} \right)^i \left(\frac{1 - \hat{t}}{(1 -
+                \hat{t}) + c \hat{t}} \right)^{n - i} = \frac{c^i}{\left((1 -
+                \hat{t}) + c \hat{t} \right)^n} B_i^n(\hat{t}) \]
+            </p>
+            <p>E la curva assume la forma:</p>
+            <p>
+                \[ B(t) = \frac{\sum_{i = 0}^{n}{B_i^n(t) c^i w_i P_i}}{\sum_{i
+                = 0}^{n}{B_i^n(t) c^i w_i}} \]
+            </p>
+            <p>
+                Moltiplicando ogni peso \(w_i\) per \(c^i\) la geometria della
+                curva non varia e se in particolare \(c\) assume il valore:
+            </p>
+            <p>\[ c = \sqrt[n]{\frac{w_0}{w_n}} \]</p>
+            <p>
+                Allora il primo e l&#39;ultimo peso assumono il valore \(w_0\).
+                Dividendo quindi tutti i pesi per \(w_0\) il primo e
+                l&#39;ultimo assumono il valore \(1\) e la curva è detta essere
+                in forma standard.
+            </p>
+            <h2 id="curve-razionali-di-b-zier-quadratiche-">
+                Curve razionali di Bézier quadratiche:
+            </h2>
+            <p>
+                Le curve razionali di Bézier di grado 2, dette quadratiche,
+                risultano utili per la rappresentazione di archi di iperbole,
+                parabola o ellisse, poiché esse possono essere ottenute
+                tagliando un cono con un piano.
+            </p>
+            <p>
+                In generale una curva di Bézier di grado 2 può essere espressa
+                come:
+            </p>
+            <p>
+                \[ B(t) = \sum_{i = 0}^{2}{\frac{B_i^2(t) w_i}{\sum_{i =
+                0}^{n}{B_i^n(t) w_i}} P_i} = \frac{(1 - t)^2 w_0}{\sum_{i =
+                0}^{n}{B_i^n(t) w_i}} P_0 + \frac{2(1 - t) t w_1}{\sum_{i =
+                0}^{n}{B_i^n(t) w_i}} P_1 + \frac{t^2 w_2}{\sum_{i =
+                0}^{n}{B_i^n(t) w_i}} P_2 \]
+            </p>
+            <p>
+                Detto \(\tau_i\) ognuno dei tre termini dell&#39;equazione si ha
+                che:
+            </p>
+            <p>
+                \[ \begin{cases} \tau_0(t) \tau_2(t) = \frac{(1 - t)^2
+                t^2}{\left(\sum_{i = 0}^{n}{B_i^n(t) w_i}\right)^2} w_0 w_2 \\
+                \tau_1(t)^2 = \frac{(1 - t)^2 t^2}{\left(\sum_{i =
+                0}^{n}{B_i^n(t) w_i}\right)^2} 4 w_1^2 \end{cases} \]
+            </p>
+            <p>Da cui è possibile ricavare che:</p>
+            <p>
+                \[ \frac{\tau_0(t) \tau_2(t)}{w_0 w_2} =\ \frac{\tau_1^2(t)}{4
+                w_1^2} \\ \Rightarrow 4 w_1^2 \tau_0(t) \tau_2(t) =\ w_0 w_2
+                \tau_1^2(t) \]
+            </p>
+            <p>
+                Ipotizzando che la curva sia in forma standard e indicando con
+                \(h\) l&#39;unico peso \(w_1\) diverso da 1:
+            </p>
+            <p>\[ 4 h^2 \tau_0(t) \tau_2(t) = \tau_1^2(t) \]</p>
+            <p>
+                Si considera quindi un generico punto \(P\) nel sistema di
+                riferimento centrato in \(P_1\) e con assi i vettori \(P_0 -
+                P_1\) e \(P_2 - P_1\); esso può essere espresso come:
+            </p>
+            <p>
+                \[ P - P_1 = \lambda (P_0 - P_1) + \mu (P_2 - P_1) \\
+                \Rightarrow P = (1 - \lambda - \mu) P_1 + \lambda P_0 + \mu P_2
+                \]
+            </p>
+            <p>
+                Se tuttavia tale punto appartiene alla curva \(B(t) = \tau_0(t)
+                P_0 + \tau_1(t) P_1 + \tau_2(t) P_2\) deve quindi esistere un
+                valore \(\hat{t}\) per cui:
+            </p>
+            <p>
+                \[ \begin{cases} \tau_0(\hat{t}) = \lambda \\ \tau_1(\hat{t}) =
+                1 - \lambda - \mu \\ \tau_2(\hat{t}) = \mu \end{cases} \]
+            </p>
+            <p>Riprendendo l&#39;equazione individuata precedentemente:</p>
+            <p>
+                \[ 4 h^2 \tau_0(\hat{t}) \tau_2(\hat{t}) = \tau_1^2(\hat{t}) \\
+                \Rightarrow 4 h^2 \lambda \mu - (1 - \lambda - \mu)^2 = 0 \]
+            </p>
+            <p>
+                Essendo \(P\) un punto generico appartenente alla curva e poiché
+                tale equazione corrisponde a quella di una funzione conica, da
+                essa è pertanto possibile determinare quale forma assume la
+                curva calcolando il suo determinante:
+            </p>
+            <p>\[ \Delta = (2 - 4h^2)^2 - 4 = 16 h^2 (h + 1)(h - 1) \]</p>
+            <p>
+                Se \(\Delta &gt; 0\), ovvero se \(h &gt; 1\) allora è possibile
+                individuare due asintoti e la funzione rappresenta
+                un&#39;iperbole; se \(\Delta = 0\) (\(h = 1\)) si ha una
+                parabola; altrimenti, se \(0 \le \Delta \le 1\) (\(0 &lt; h &lt;
+                1\)), un&#39;ellissi.
+            </p>
+            <p>
+                Se inoltre \(0 \le \Delta \le 1\) e il triangolo formato dai
+                punti di controllo è isoscele, la curva potrebbe rappresentare
+                anche un arco di cinconferenza. In questo case \(P_0\) e \(P_2\)
+                starebbero su di essa e, se \(\alpha\) è pari all&#39;angolo
+                alla circonferenza definito dal segmento \(P_0 P_2\), il
+                corrispondente valore da associare a \(h\) potrebbe essere
+                calcolato come:
+            </p>
+            <p>
+                \[ h = \left(\frac{P_0 + P_2}{2}, P\left(\frac{1}{2} \right),
+                P_1 \right) = \left(\cos{\alpha}, 1, \frac{1}{\cos{\alpha}}
+                \right) = \frac{1 - \cos{\alpha}}{\frac{1}{\cos{\alpha}} - 1} =
+                \cos{\alpha} \]
+            </p>
+            <p>
+                La Figura 4 mostra una rappresentazione della situazione appena
+                descritta, in cui \(\frac{P_0 + P_2}{2} = M\) e
+                \(P\left(\frac{1}{2} \right) = B\).
+            </p>
+
+            <figure class="text-center">
+                <div class="overlay" id="circle-imageOverlay">
+                    <img src="./res/teoria/circle.png" class="enlarged-image" />
+                </div>
+                <img
+                    src="./res/teoria/circle.png"
+                    class="rounded img-fluid mx-auto d-block"
+                    style="
+                        max-width: 50%;
+                        max-height: 300px;
+                        height: auto;
+                        width: auto;
+                    "
+                    onclick="openModal('circle')"
+                />
+                <figcaption class="mt-2">
+                    Figura 4: Curva razionale di Bézier di grado 2
+                    rappresentante un arco di circonferenza<br />
+                    <span style="font-style: italic">
+                        Cliccare sull'immagine per ingrandirla</span
+                    >
+                </figcaption>
+            </figure>
+
+            <p>
+                Per ottenere un&#39;intera circonferenza è di conseguenza
+                possibile incollare tra loro più curve di Bezier razionali di
+                grado 2, ognuna rappresentante un singolo arco. Questa è la
+                pratica più comunemente utilizzata, ma si rimanda
+                all&#39;articolo
+                <a
+                    href="https://www.sciencedirect.com/science/article/pii/001044859591140G"
+                    >Higher order Bézier circles</a
+                >; (Jin J Chou, 1995, Computer-Aided Design) per una
+                dimostrazione di come è possibile rappresentare circonferenze
+                con un&#39;unica curva di Bézier di grado 5. Si può osservare
+                nel progetto, nella sezione &quot;Esempi&quot;, come una
+                circonferenza di questo tipo può essere costruita.
+            </p>
+        </div>
+
+        <script src="./scripts/img.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>
